@@ -12,7 +12,7 @@ Clone the repo from GitHub and then build and install the gem locally:
 
     $ git clone git@github.com:stevemorris/stock-returns.git
     $ gem build stock-returns.gemspec
-    $ gem install stock-returns-0.0.1.gem
+    $ gem install stock-returns-0.0.2.gem
 
 Require the gem from your Ruby program or from IRB, and then call it:
 
@@ -28,23 +28,35 @@ The StockReturns.calculate method returns a hash containing the total return and
 
     StockReturns.calculate(stock_symbol, purchase_date, options = {})
     
-stock_symbol (required)
+Required: *stock_symbol*
 
-purchase_date (required): yyyy-mm-dd
+Required: *purchase_date* [format: 'yyyy-mm-dd']
 
-purchase_price (optional): if not provided, defaults to closing price on purchase date
+Optional: *purchase_price: $$.cc* [if not provided, defaults to the closing price on the purchase date]
 
-    purchase_price: '12.34'
+    purchase_price: 12.34
 
-sell_date (optional): if not provided, defaults to most recent closing date
+Optional: *sell_date: 'yyyy-mm-dd'* [if not provided, defaults to the most recent closing date]
 
     sell_date: '2011-09-01'
 
-sell_price (optional): if not provided, defaults to closing price on sell date
+Optional: *sell_price: $$.cc*  [if not provided, defaults to the closing price on the sell date]
 
-    sell_price: '23.45'
+    sell_price: 23.45
 
-num_shares (optional): not used yet
+Example with optional arguments:
 
+    StockReturns.calculate('AAPL', '2011-1-3', purchase_price: 329.57, sell_date: '2011-9-1', sell_price: 381.03)
 
-    
+## Command Line Interface
+
+The gem can also be run from the command line by executing the file bin/stock-returns
+
+Example:
+
+    bin/stock-returns GOOG 2004-8-19
+
+Example with optional arguments:
+
+    bin/stock-returns AAPL 2011-1-3 PP=329.57 SD=2011-9-1 SP=381.03
+

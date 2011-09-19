@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
+require 'stock-returns'
+require 'stock-returns/calculator'
+
+if ARGV.size >= 2
+  options = {}
+  ARGV[2..-1].each do |arg|
+    key, value = arg.split('=')
+    case key
+      when 'PP' then options[:purchase_price] = value
+      when 'SD' then options[:sell_date]      = value
+      when 'SP' then options[:sell_price]     = value
+    end
+  end
+
+  returns = StockReturns.calculate(ARGV[0], ARGV[1], options)
+
+  puts "Total Return = #{returns[:total_return]}"
+  puts "Annualized Return = #{returns[:annualized_return]}"
+else
+  puts 'Usage:   bin/stock-returns [StockSymbol] [PurchaseDate] [optional args]'
+  puts 'Example: bin/stock-returns GOOG 2004-8-19'
+  puts 'optional args (any or all): PP=[PurchasePrice] SD=[SellDate] SP=[SellPrice]'
+  puts 'Example: bin/stock-returns AAPL 2011-1-3 PP=329.57 SD=2011-9-1 SP=381.03'
+end

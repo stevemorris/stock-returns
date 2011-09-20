@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
-require 'stock-returns'
-require 'stock-returns/calculator'
+require_relative '../lib/stock-returns'
+require_relative '../lib/stock-returns/calculator'
 
 if ARGV.size >= 2
   options = {}

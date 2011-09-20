@@ -1,8 +1,9 @@
-require 'stock-returns/version'
-require 'stock-returns/calculator'
-require 'stock-returns/yahoo_finance'
 require 'date'
 require 'money'
+
+require_relative 'stock-returns/version'
+require_relative 'stock-returns/calculator'
+require_relative 'stock-returns/yahoo_finance'
 
 module StockReturns
   extend self

@@ -20,7 +20,7 @@ Require the gem from your Ruby program or from IRB, and then call it:
     
     StockReturns.calculate('AAPL', '2001-10-23')
 
-[The example above tells you what your investment return would have been if you had bought Apple stock on the day of the iPod 1 announcement and held it to today.]
+[The example above shows you what your investment return would have been if you had bought Apple stock on the day of the iPod 1 announcement and held it to today.]
 
 The StockReturns.calculate method returns a hash containing the total return and the annualized return.
 

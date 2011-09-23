@@ -22,7 +22,7 @@ module StockReturns
 
   def verify_stock(stock)
     unless YahooFinance.verify_stock(stock)
-      raise ArgumentError, "Stock symbol #{stock} not found."
+      raise ArgumentError, "Stock symbol \"#{stock}\" was not found.", []
     end
   end
 
@@ -30,8 +30,11 @@ module StockReturns
     if date.nil?
       Date.today
     else
-      # verify and parse
-      Date.parse(date)
+      begin
+        Date.parse(date)
+      rescue ArgumentError => e
+        raise e, "\"#{date}\" is not a valid date. Please try again.", []
+      end
     end
   end
 
@@ -39,8 +42,12 @@ module StockReturns
     if price.nil?
       YahooFinance.get_price(stock, date)
     else
-      # verify and parse
-      Money.parse(price)
+      begin
+        raise ArgumentError unless /^\$?\d+\.\d{2}$/ === price.to_s
+        Money.parse(price)
+      rescue ArgumentError => e
+        raise e, "\"#{price}\" is not a valid price. Please try again.", []
+      end
     end
   end
 end

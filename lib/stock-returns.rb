@@ -1,5 +1,6 @@
 require 'date'
 require 'money'
+require_relative 'stock-returns/application'
 require_relative 'stock-returns/calculator'
 require_relative 'stock-returns/yahoo_finance'
 

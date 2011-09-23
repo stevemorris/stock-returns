@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/stock-returns'
-require_relative '../lib/stock-returns/application'
 
 StockReturns::Application.run(ARGV)

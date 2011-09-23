@@ -50,13 +50,12 @@ Example with optional arguments:
 
 ## Command Line Interface
 
-The gem can also be run from the command line by executing the file bin/stock-returns
+The gem can also be run from the command line by executing the *stock-returns* program.
 
 Example:
 
-    bin/stock-returns GOOG 2004-8-19
+    stock-returns GOOG 2004-8-19
 
 Example with optional arguments:
 
-    bin/stock-returns AAPL 2011-1-3 --pp 329.57 --sd 2011-9-1 --sp 381.03
-
+    stock-returns AAPL 2011-1-3 --pp 329.57 --sd 2011-9-1 --sp 381.03

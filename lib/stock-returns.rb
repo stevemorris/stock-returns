@@ -1,34 +1,43 @@
 require 'date'
 require 'money'
-
-require_relative 'stock-returns/version'
 require_relative 'stock-returns/calculator'
 require_relative 'stock-returns/yahoo_finance'
 
 module StockReturns
   extend self
 
-  def calculate(stock_symbol, purchase_date, options = {})
-    purchase_date = Date.parse(purchase_date)
+  def calculate(stock, purchase_date, options = {})
+    verify_stock(stock)
 
-    purchase_price = if options[:purchase_price].nil?
-      YahooFinance.get_price(stock_symbol, purchase_date)
-    else
-      Money.parse(options[:purchase_price])
-    end
-
-    sell_date = if options[:sell_date].nil?
-      Date.today
-    else
-      Date.parse(options[:sell_date])
-    end
-
-    sell_price = if options[:sell_price].nil?
-      YahooFinance.get_price(stock_symbol, sell_date)
-    else
-      Money.parse(options[:sell_price])
-    end
+    purchase_date  = set_date(purchase_date)
+    purchase_price = set_price(options[:purchase_price], stock, purchase_date)
+    sell_date      = set_date(options[:sell_date])
+    sell_price     = set_price(options[:sell_price], stock, sell_date)
 
     Calculator.calculate(purchase_date, purchase_price, sell_date, sell_price)
+  end
+
+  private
+
+  def verify_stock(stock)
+    # verify with Yahoo
+  end
+
+  def set_date(date)
+    if date.nil?
+      Date.today
+    else
+      # verify and parse
+      Date.parse(date)
+    end
+  end
+
+  def set_price(price, stock, date)
+    if price.nil?
+      YahooFinance.get_price(stock, date)
+    else
+      # verify and parse
+      Money.parse(price)
+    end
   end
 end

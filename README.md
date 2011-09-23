@@ -12,7 +12,7 @@ Clone the repo from GitHub and then build and install the gem locally:
 
     $ git clone git@github.com:stevemorris/stock-returns.git
     $ gem build stock-returns.gemspec
-    $ gem install stock-returns-0.0.2.gem
+    $ gem install stock-returns-0.0.3.gem
 
 Require the gem from your Ruby program or from IRB, and then call it:
 
@@ -58,5 +58,5 @@ Example:
 
 Example with optional arguments:
 
-    bin/stock-returns AAPL 2011-1-3 PP=329.57 SD=2011-9-1 SP=381.03
+    bin/stock-returns AAPL 2011-1-3 --pp 329.57 --sd 2011-9-1 --sp 381.03
 

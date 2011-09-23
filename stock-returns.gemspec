@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Steve Morris"]
   s.email       = ["github@stevemorris.com"]
   s.homepage    = "https://github.com/stevemorris"
-  s.summary     = %q{Calculates returns on stocks}
-  s.description = %q{Alpha version of a gem to calculate returns on stocks
-    in a variety of ways.}
+  s.summary     = "Stock returns library."
+  s.description = "This library calculates returns on individual stocks."
 
   s.rubyforge_project = "stock-returns"
 

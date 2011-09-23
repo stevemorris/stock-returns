@@ -21,7 +21,9 @@ module StockReturns
   private
 
   def verify_stock(stock)
-    # verify with Yahoo
+    unless YahooFinance.verify_stock(stock)
+      raise ArgumentError, "Stock symbol #{stock} not found."
+    end
   end
 
   def set_date(date)

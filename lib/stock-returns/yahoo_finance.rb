@@ -19,6 +19,11 @@ module StockReturns
       Money.parse(price)
     end
 
+    def verify_stock(stock)
+      url = 'http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=ne1' % stock
+      !open(url).read.include?('No such ticker symbol')
+    end
+
     private
 
     def yahoo_date(date)

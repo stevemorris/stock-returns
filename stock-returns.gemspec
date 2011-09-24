@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "stock-returns/version"
 
 Gem::Specification.new do |s|
   s.name        = "stock-returns"
-  s.version     = StockReturns::VERSION
+  s.version     = "0.0.4"
   s.authors     = ["Steve Morris"]
   s.email       = ["github@stevemorris.com"]
   s.homepage    = "https://github.com/stevemorris"

@@ -1,0 +1,11 @@
+require 'csv'
+require 'date'
+require 'money'
+require 'open-uri'
+require 'optparse'
+
+require_relative 'stock-returns/stock_returns'
+require_relative 'stock-returns/application'
+require_relative 'stock-returns/engine'
+require_relative 'stock-returns/calculators/basic_calculator'
+require_relative 'stock-returns/data_sources/yahoo_finance'

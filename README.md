@@ -2,53 +2,91 @@
 
 A Ruby gem that calculates investment returns on individual US stocks.
 
-Returns are adjusted for splits and dividends (except when using the optional arguments, for now).
+Returns are adjusted for splits and dividends, except when calling the gem with the optional arguments.
 
-Note: this is an Alpha version
-
-## Installation and Usage
+## Installation
 
 Clone the repo from GitHub and then build and install the gem locally:
 
     $ git clone git@github.com:stevemorris/stock-returns.git
     $ gem build stock-returns.gemspec
-    $ gem install stock-returns-0.0.3.gem
+    $ gem install stock-returns-0.0.5.gem
 
-Require the gem from your Ruby program or from IRB, and then call it:
-
-    require 'stock-returns'
-    
-    StockReturns.calculate('AAPL', '2001-10-23')
-
-[The example above shows you what your investment return would have been if you had bought Apple stock on the day of the iPod 1 announcement and held it to today.]
-
-The StockReturns.calculate method returns a hash containing the total return and the annualized return.
-
-## Required and Optional Arguments
+## Usage and examples
 
     StockReturns.calculate(stock_symbol, purchase_date, options = {})
+
+To see what your return would have been if you had bought Apple stock on the day of the iPod 1 announcement and held it to today, create and run the following Ruby program:
+
+    require 'stock-returns'
+    require 'date'
     
-Required: *stock_symbol*
+    StockReturns.calculate('AAPL', Date.parse('2001-10-23'))
 
-Required: *purchase_date* [format: 'yyyy-mm-dd']
+Below is an alternate version of the program above using a *StockReturns::Engine* object:
 
-Optional: *purchase_price: $$.cc* [if not provided, defaults to the closing price on the purchase date]
+    require 'stock-returns'
+    require 'date'
 
-    purchase_price: 12.34
+    stock_returns = StockReturns::Engine.new('AAPL', Date.parse('2001-10-23'))
+    stock_returns.calculate
 
-Optional: *sell_date: 'yyyy-mm-dd'* [if not provided, defaults to the most recent closing date]
+Below is an example program using the common optional arguments:
 
-    sell_date: '2011-09-01'
+    require 'stock-returns'
+    require 'date'
+    require 'money'
 
-Optional: *sell_price: $$.cc*  [if not provided, defaults to the closing price on the sell date]
+    StockReturns.calculate('AAPL', Date.parse('2011-1-3'), purchase_price: Money.parse(329.57), sell_date: Date.parse('2011-9-1'), sell_price: Money.parse(381.03))
 
-    sell_price: 23.45
+## Required arguments to *calculate* method
+    
+### stock_symbol
 
-Example with optional arguments:
+String object, example:
 
-    StockReturns.calculate('AAPL', '2011-1-3', purchase_price: 329.57, sell_date: '2011-9-1', sell_price: 381.03)
+    'GOOG'
 
-## Command Line Interface
+### purchase_date
+
+Date object, example:
+
+    Date.parse('2010-12-30')
+
+## Optional arguments to *calculate* method
+
+### purchase_price: purchaseprice
+
+Money object from the Ruby Money gem, example:
+
+    purchase_price: Money.parse('12.34')
+
+### sell_date: selldate
+
+Date object, example:
+
+    sell_date: Date.parse('2010-12-30')
+
+### sell_price: sellprice
+
+Money object from the Ruby Money gem, example:
+
+    sell_price: Money.parse('12.34')
+
+### data_source: datasource
+
+Module object (see *Defining a custom data source* below), example:
+
+    data_source: StockReturns::MyDataSource
+
+
+## Return object from *calculate* method
+
+The *calculate* method returns a hash object containing the total return and annualized return calculated by the gem. For example:
+
+    {:total_return=>"50.00%", :annualized_return=>"5.88%"}
+
+## Command line interface
 
 The gem can also be run from the command line by executing the *stock-returns* program.
 
@@ -59,3 +97,20 @@ Example:
 Example with optional arguments:
 
     stock-returns AAPL 2011-1-3 --pp 329.57 --sd 2011-9-1 --sp 381.03
+
+## Defining a custom data source
+
+Below is the required structure of a Ruby module that implements a custom data source for stock prices, showing the two required methods. A custom module can be passed to the *calculate* method using the *data_source:* argument.
+
+    module StockReturns
+      module MyDataSource # Can change this name
+        
+        def self.get_price(stock_symbol, date)
+          # Return the stock price as a Money object
+        end
+        
+        def self.verify_stock(stock_symbol)
+          # Return true if stock_symbol is valid, false otherwise
+        end
+      end
+    end

@@ -75,9 +75,9 @@ Money object from the Ruby Money gem, example:
 
 ### data_source: datasource
 
-Module object (see *Defining a custom data source* below), example:
+Object that defines the custom data source methods (see *Defining a custom data source* below), example:
 
-    data_source: StockReturns::MyDataSource
+    data_source: MyDataSource
 
 
 ## Return object from *calculate* method
@@ -100,17 +100,15 @@ Example with optional arguments:
 
 ## Defining a custom data source
 
-Below is the required structure of a Ruby module that implements a custom data source for stock prices, showing the two required methods. A custom module can be passed to the *calculate* method using the *data_source:* argument.
+Below is a Ruby object that implements a custom data source for stock prices, showing the two required methods that must be defined. A custom data source object can be passed to the *calculate* method using the *data_source:* argument.
 
-    module StockReturns
-      module MyDataSource # Can change this name
-        
-        def self.get_price(stock_symbol, date)
-          # Return the stock price as a Money object
-        end
-        
-        def self.verify_stock(stock_symbol)
-          # Return true if stock_symbol is valid, false otherwise
-        end
+    module MyDataSource # Can change this name
+      
+      def self.get_price(stock_symbol, date)
+        # Return the stock price as a Money object
+      end
+      
+      def self.verify_stock(stock_symbol)
+        # Return true if stock_symbol is valid, false otherwise
       end
     end
